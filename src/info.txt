@@ -1,0 +1,1 @@
+Main components of the project will be store in src
