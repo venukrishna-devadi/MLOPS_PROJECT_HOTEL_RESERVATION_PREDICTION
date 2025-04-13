@@ -1,3 +1,5 @@
+### This Docker file is for JENKINS CONTAINER
+
 # Use the official Jenkins LTS image
 FROM jenkins/jenkins:lts
 
