@@ -6,3 +6,4 @@ pyyaml
 lightgbm
 imbalanced-learn
 mlflow # to keep track of models and experiments
+flask
