@@ -60,6 +60,27 @@ pipeline {
                     }
                 }
             }
+
+        stage('Deploy to GCR') {
+            steps {
+                withCredentials([file(credentialsId: 'gcp-key', variable: 'Google_Application_Credentials')]){
+                    script{
+                        echo 'Deploy to GCR................'
+                        sh '''
+                        export PATH=$PATH:${GCLOUD_PATH}
+                        gcloud auth activate-service-account --key-file=${Google_Application_Credentials}
+
+                        gcloud config set project ${GCP_PROJECT}
+
+                        gcloud run deploy ml_ops_project-1\
+                            --image=gcr.io/${GCP_PROJECT}/ml_ops_project-1:latest \
+                            --platform=managed \
+                            --region=us-central1 \
+                            --allow-unauthenticated
+                        '''
+                    }
+                }
+            }    
         }
     }
 } // Added closing bracket for the pipeline
