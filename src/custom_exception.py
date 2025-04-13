@@ -21,7 +21,7 @@ class CustomException(Exception):
     def get_detailed_error_message(error_message, error_detail:sys):
 
         # exc_info() returns 3 opts, we need only the last thing which return traceback
-        _,_, exc_tb = sys.exc_info()
+        _,_, exc_tb = traceback.sys.exc_info()
         # in which file the error occured
         file_name = exc_tb.tb_frame.f_code.co_filename
         # line number

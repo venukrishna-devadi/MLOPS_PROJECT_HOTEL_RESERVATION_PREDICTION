@@ -53,9 +53,9 @@ pipeline {
 
                         gcloud auth configure-docker --quiet
 
-                        docker build -t gcr.io/${GCP_PROJECT}/ml_ops_project-1:latest .
+                        docker build -t gcr.io/${GCP_PROJECT}/ml-ops-project-1:latest .
                          
-                        docker push gcr.io/${GCP_PROJECT}/ml_ops_project-1:latest 
+                        docker push gcr.io/${GCP_PROJECT}/ml-ops-project-1:latest 
                         '''
                     }
                 }
@@ -73,8 +73,8 @@ pipeline {
 
                         gcloud config set project ${GCP_PROJECT}
 
-                        gcloud run deploy ml_ops_project-1\
-                            --image=gcr.io/${GCP_PROJECT}/ml_ops_project-1:latest \
+                        gcloud run deploy ml-ops-project-1\
+                            --image=gcr.io/${GCP_PROJECT}/ml-ops-project-1:latest \
                             --platform=managed \
                             --region=us-central1 \
                             --allow-unauthenticated
