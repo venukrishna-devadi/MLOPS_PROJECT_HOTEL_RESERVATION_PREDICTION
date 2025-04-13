@@ -18,11 +18,9 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 WORKDIR /app
 
 # install some dependencies
-RUN apt-get update && apt-get-install -y --no-install-recommends \
-
-# installing light gbm dependecies
+RUN apt-get update && apt-get install -y --no-install-recommends \
     libgomp1 \
-    && apt-get-clean \
+    && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 # for copying all the code from the project directory
@@ -39,6 +37,3 @@ EXPOSE 5000
 
 # to run the app
 CMD ["python", "application.py"]
-
-
-
