@@ -5,6 +5,8 @@ pipeline {
     // Create virtual environment in Jenkins
     environment {
         VENV_DIR = 'venv'
+        GCP_PROJECT = "sincere-octane-455720-d4"
+        GCLOUD_PATH = "/var/jenkins_home/google-cloud-sdk/bin"
     }
 
     stages {
@@ -36,7 +38,30 @@ pipeline {
                     '''
                 }
             }
-        } // Added closing bracket for the stage
+        }
+        
+        stage('Building and Pushing image to GCR') {
+            steps {
+                withCredentials([file(credentialsId: 'gcp-key', variable: 'Google_Application_Credentails')]){
+                    script{
+                        echo 'Building and Pushing image to GCR................'
+                        sh '''
+                        export PATH=$PATH:$(GCLOUD_PATH)
+                        gcloud auth activate-service-account --key-file=${Google_Application_Credentails}
+
+                        gcloud config set project ${GCP_PROJECT}
+
+                        gcloud auth configure-docker --quiet
+
+                        docker build -t gcr.io/${GCP_PROJECT}/ml_ops_project-1:latest .
+                         
+                        docker push gcr.io/${GCP_PROJECT}/ml_ops_project-1:latest .
+
+                        '''
+
+                    }
+                }
+            } // Added closing bracket for the stage
     } // Added closing bracket for the stages
 } // Added closing bracket for the pipeline
 
