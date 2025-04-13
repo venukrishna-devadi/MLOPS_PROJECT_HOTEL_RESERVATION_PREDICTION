@@ -60,6 +60,7 @@ pipeline {
                     }
                 }
             }
+        } // Added closing bracket for the stage
 
         stage('Deploy to GCR') {
             steps {
@@ -83,5 +84,4 @@ pipeline {
             }    
         }
     }
-} // Added closing bracket for the pipeline
-
+}
