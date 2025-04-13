@@ -24,7 +24,7 @@ pipeline {
                     )
                 }
             }
-        } // Added closing bracket for the stage
+        } 
 
         stage('Setting up our Virtual Environment and Installing dependencies') {
             steps {
@@ -42,12 +42,12 @@ pipeline {
         
         stage('Building and Pushing image to GCR') {
             steps {
-                withCredentials([file(credentialsId: 'gcp-key', variable: 'Google_Application_Credentails')]){
+                withCredentials([file(credentialsId: 'gcp-key', variable: 'Google_Application_Credentials')]){
                     script{
                         echo 'Building and Pushing image to GCR................'
                         sh '''
-                        export PATH=$PATH:$(GCLOUD_PATH)
-                        gcloud auth activate-service-account --key-file=${Google_Application_Credentails}
+                        export PATH=$PATH:${GCLOUD_PATH}
+                        gcloud auth activate-service-account --key-file=${Google_Application_Credentials}
 
                         gcloud config set project ${GCP_PROJECT}
 
@@ -55,13 +55,12 @@ pipeline {
 
                         docker build -t gcr.io/${GCP_PROJECT}/ml_ops_project-1:latest .
                          
-                        docker push gcr.io/${GCP_PROJECT}/ml_ops_project-1:latest .
-
+                        docker push gcr.io/${GCP_PROJECT}/ml_ops_project-1:latest 
                         '''
-
                     }
                 }
-            } // Added closing bracket for the stage
-    } // Added closing bracket for the stages
+            }
+        }
+    }
 } // Added closing bracket for the pipeline
 
